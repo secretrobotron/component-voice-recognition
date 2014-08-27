@@ -4,18 +4,40 @@
     {
       "tags": ["text", "voice"],
       "thumbnail": "./thumbnail.png",
-      "description": "Encodes voice as text!",
+      "description": "Speech recognition component",
       "name": "Voice Recognition",
       "listeners": {
         "start": {
           "label": "Start Recording",
           "description": "Start recording voice data."
         },
+        "setgrammar": {
+          "label": "Set Grammar 1",
+          "description": "Set the grammar."
+        },        
         "stop": {
           "label": "Stop Recording",
           "description": "Stop recording and try to decode."
         }
-      }
+      },
+	"attributes": {
+    "freespeech": {
+          "description": "Set if is free speech",
+          "label": "Free speech?",
+          "editable": "boolean"
+      } ,
+      "continuous": {
+          "description": "Continuous recognition",
+          "label": "Continuous recognition?",
+          "editable": "boolean"
+      },
+      "grammar": {
+          "label": "Grammar",
+          "description": "Grammar.",
+          "editable": "textarea",
+          "listener": true
+      } 
+	}
     }
   </ceci-definition>
   <template>
@@ -80,6 +102,7 @@
         this.super();
         this.$.vr.addEventListener('result', function (e) {
           this.resultantText = e.detail.result;
+          console.log("e.detail.result " + e.detail.result);
           this.state = 'idle';
         }.bind(this));
       },
@@ -87,6 +110,10 @@
         this.$.vr.start();
         this.state = 'recording';
       },
+      setgrammar: function () {
+        console.log('set aki');
+        this.$.vr.setgrammar();
+      },      
       stop: function () {
         this.$.vr.stop();
         this.state = 'decoding';
