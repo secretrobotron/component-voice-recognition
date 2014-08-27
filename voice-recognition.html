@@ -1,5 +1,5 @@
 <!-- Define your custom element -->
-<polymer-element name="voice-recognition" attributes="continuous text">
+<polymer-element name="voice-recognition" attributes="continuous text" extends="ceci-element">
     <script>
         Polymer('voice-recognition', {
             /* -- Attributes ------------------------------------------------ */
@@ -80,6 +80,8 @@
                         that.text += e.results[i][0].transcript;
                         e.result = that.text;
                         console.log('result final loop');
+                        this.broadcast('result', "result final loop");
+
                     }
 
                     that.fire('result', e);
